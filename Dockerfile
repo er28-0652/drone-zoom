@@ -1,4 +1,4 @@
 FROM alpine:3.7 as alpine
-ADD webhook /bin/
+ADD zoom /bin/
 RUN apk -Uuv add ca-certificates
-ENTRYPOINT /bin/webhook
+ENTRYPOINT /bin/zoom
