@@ -21,6 +21,14 @@ type Message struct {
 	Action  string `json:"action"`
 }
 
+var (
+	msgFormat    = "<p><label>%s</label></p>"
+	actionFormat = map[string]string{
+		"send": "<p><button onclick=\"sendMsg('1', %s)\">send</button></p>",
+		"copy": "<p><button onclick=\"copyMsg('1', %s)\">copy</button></p>",
+	}
+)
+
 func NewZoomClient(webhook, token string) (*ZoomClient, error) {
 	if len(token) == 0 {
 		return nil, fmt.Errorf("token is missing")
@@ -43,15 +51,13 @@ func NewZoomClient(webhook, token string) (*ZoomClient, error) {
 }
 
 func makeJSONMassage(msg *Message) ([]byte, error) {
-	format := "<p><label>%s</label></p>"
-	msg.Title = fmt.Sprintf(format, msg.Title)
-	msg.Summary = fmt.Sprintf(format, msg.Summary)
-	msg.Body = fmt.Sprintf(format, msg.Body)
-	msg.Action = fmt.Sprintf(map[string]string{
-		"send": "<p><button onclick=\"sendMsg('1', %s)\">send</button></p>",
-		"copy": "<p><button onclick=\"copyMsg('1', %s)\">copy</button></p>",
-	}[msg.Action], msg.Action)
-	msgJSON, err := json.Marshal(msg)
+	newMsg := Message{
+		Title:   fmt.Sprintf(msgFormat, msg.Title),
+		Summary: fmt.Sprintf(msgFormat, msg.Title),
+		Body:    fmt.Sprintf(msgFormat, msg.Body),
+		Action:  fmt.Sprintf(actionFormat[msg.Action], msg.Action),
+	}
+	msgJSON, err := json.Marshal(&newMsg)
 	if err != nil {
 		return nil, err
 	}
