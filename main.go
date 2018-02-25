@@ -59,10 +59,15 @@ func (p *Plugin) Exec() error {
 		return err
 	}
 
+	log.Printf("Title: %s\n", msg.Title)
+	log.Printf("Summary: %s\n", msg.Summary)
+	log.Printf("Body: %s\n", msg.Body)
+
 	err = zoom.SendMessage(msg)
 	if err != nil {
 		return err
 	}
+	log.Println("done")
 	return nil
 }
 
