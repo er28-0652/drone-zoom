@@ -60,8 +60,6 @@ func (p *Plugin) Exec() error {
 		return errors.Wrap(err, "fail to init Client")
 	}
 
-	log.Printf("Webhook: %s\n", zoom.WebhookURL.String())
-	log.Printf("Token: %s\n", zoom.Header["X-Zoom-Token"])
 	log.Printf("Title: %s\n", msg.Title)
 	log.Printf("Summary: %s\n", msg.Summary)
 	log.Printf("Body: %s\n", msg.Body)
