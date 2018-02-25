@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/er28-0652/go-zoomus/zoomus"
+	"github.com/pkg/errors"
 	"github.com/urfave/cli"
 )
 
@@ -56,16 +57,18 @@ func (p *Plugin) Exec() error {
 
 	zoom, err := zoomus.NewClient(p.Config.Webhook, p.Config.Token)
 	if err != nil {
-		return err
+		return errors.Wrap(err, "fail to init Client")
 	}
 
+	log.Printf("Webhook: %s\n", zoom.WebhookURL.String())
+	log.Printf("Token: %s\n", zoom.Header["X-Zoom-Token"])
 	log.Printf("Title: %s\n", msg.Title)
 	log.Printf("Summary: %s\n", msg.Summary)
 	log.Printf("Body: %s\n", msg.Body)
 
 	err = zoom.SendMessage(msg)
 	if err != nil {
-		return err
+		return errors.Wrap(err, "fail to send message")
 	}
 	log.Println("done")
 	return nil
@@ -125,7 +128,11 @@ func run(c *cli.Context) error {
 		},
 	}
 
-	return plugin.Exec()
+	err := plugin.Exec()
+	if err != nil {
+		return cli.NewExitError(err, -1)
+	}
+	return nil
 }
 
 func main() {
@@ -238,8 +245,5 @@ func main() {
 		},
 	}
 
-	err := app.Run(os.Args)
-	if err != nil {
-		log.Fatal(err)
-	}
+	app.Run(os.Args)
 }
