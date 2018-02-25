@@ -72,7 +72,7 @@ func (p *Plugin) Exec() error {
 }
 
 func message(repo Repo, build Build) string {
-	return fmt.Sprintf("*%s* <%s|%s/%s#%s> (%s) by %s",
+	return fmt.Sprintf("*%s* [%s|%s/%s#%s] (%s) by %s",
 		build.Status,
 		build.Link,
 		repo.Owner,
@@ -137,12 +137,12 @@ func main() {
 		cli.StringFlag{
 			Name:   "webhook",
 			Usage:  "zoom webhook url",
-			EnvVar: "ZOOM_WEBHOOK",
+			EnvVar: "ZOOM_WEBHOOK,PLUGIN_WEBHOOK",
 		},
 		cli.StringFlag{
 			Name:   "token",
 			Usage:  "zoom webhook token",
-			EnvVar: "ZOOM_TOKEN",
+			EnvVar: "ZOOM_TOKEN,PLUGIN_TOKEN",
 		},
 
 		// drone envs
