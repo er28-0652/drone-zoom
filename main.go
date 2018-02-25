@@ -48,7 +48,7 @@ type Plugin struct {
 }
 
 func (p *Plugin) Exec() error {
-	msg := &zoomus.Message{
+	msg := zoomus.Message{
 		Title:   "drone notification",
 		Summary: message(p.Repo, p.Build),
 		Body:    fallback(p.Repo, p.Build),
@@ -59,7 +59,6 @@ func (p *Plugin) Exec() error {
 		return err
 	}
 
-	log.Printf("%#v\n", msg)
 	err = zoom.SendMessage(msg)
 	if err != nil {
 		return err
