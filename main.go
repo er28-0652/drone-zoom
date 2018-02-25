@@ -66,6 +66,7 @@ func (p *Plugin) Exec() error {
 
 	err = zoom.SendMessage(msg)
 	if err != nil {
+		log.Printf("erro found after send message")
 		return errors.Wrap(err, "fail to send message")
 	}
 	log.Println("done")
