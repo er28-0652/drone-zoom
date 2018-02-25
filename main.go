@@ -130,9 +130,9 @@ func main() {
 	app.Flags = []cli.Flag{
 		// zoom config variables
 		cli.StringFlag{
-			Name:   "webhook_url",
+			Name:   "webhook",
 			Usage:  "zoom webhook url",
-			EnvVar: "PLUGIN_WEBHOOK_URL",
+			EnvVar: "PLUGIN_WEBHOOK",
 		},
 		cli.StringFlag{
 			Name:   "token",
