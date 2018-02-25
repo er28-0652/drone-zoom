@@ -34,10 +34,6 @@ type Build struct {
 type Config struct {
 	Webhook string
 	Token   string
-	Title   string
-	Summary string
-	Body    string
-	Action  string
 }
 
 type Job struct {
@@ -63,6 +59,7 @@ func (p *Plugin) Exec() error {
 		return err
 	}
 
+	log.Printf("%#v\n", msg)
 	err = zoom.SendMessage(msg)
 	if err != nil {
 		return err
