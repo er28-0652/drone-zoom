@@ -132,12 +132,12 @@ func main() {
 		cli.StringFlag{
 			Name:   "webhook",
 			Usage:  "zoom webhook url",
-			EnvVar: "PLUGIN_WEBHOOK",
+			EnvVar: "ZOOM_WEBHOOK",
 		},
 		cli.StringFlag{
 			Name:   "token",
 			Usage:  "zoom webhook token",
-			EnvVar: "PLUGIN_TOKEN",
+			EnvVar: "ZOOM_TOKEN",
 		},
 
 		// drone envs
