@@ -1,0 +1,24 @@
+workspace:
+  base: /go
+  path: src/github.com/er28-0652/drone-zoom
+
+pipeline:
+  build_linux_amd64:
+    image: golang:1.9
+    group: build
+    environment:
+      - GOOS=linux
+      - GOARCH=amd64
+      - CGO_ENABLED=0
+    commands:
+      - go build -v -ldflags "-X main.build=${DRONE_BUILD_NUMBER}" -a -o zoom
+
+  publish:
+    image: plugins/docker
+    repo: er280652/drone-zoom
+    tags: latest
+    secrets: [ docker_username, docker_password ]
+    dockerfile: Dockerfile
+    when:
+      branch: master
+      event: push
